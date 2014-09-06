@@ -71,4 +71,35 @@ int StringICompA(const std::string  &str1, const std::string  &str2);
 size_t StringSplitW(std::vector<std::wstring> &out, const std::wstring &str, const wchar_t * delim, const wchar_t * quote = L"", const wchar_t * esc = L"");
 size_t StringSplitA(std::vector<std::string>  &out, const std::string  &str, const char *    delim, const char * quote = "", const char * esc = "");
 
+
+/**
+ * @brief	文字列結合
+ *
+ * @tparam	C	文字型 (char, wchar_t)
+ * @tparam	V	入力コンテナ (Sequence containers. array, vector, deque, list)
+ *
+ * @param	dst			結果出力バッファ
+ * @param	src			結合対象コンテナ <br> operator<< でstreamに文字列を送れるならばどんな要素でもOKなはず。。
+ * @param	separator	結合文字
+ *
+ * @bug		入力コンテナが[forward_list]の場合動作しない。
+ */
+template <typename C, typename V>
+void StringJoin(std::basic_string<C> &dst, V &src, const C * separator)
+	{
+		using namespace std;
+		typedef std::basic_string<C>	stringT;
+		typedef basic_stringstream<C, char_traits<C>, allocator<C> > stringstreamT;
+
+		if(src.empty()) { dst = stringT(); return; }
+		
+		stringstreamT ss;
+		for_each(src.begin(), prev(src.end()),
+				 [&](int e){ ss << e << separator; });
+		ss << src.back();
+
+		dst = ss.str();
+	}
+
+
 #endif /* __YOKOYAMA51_TSTRING_H__ */
