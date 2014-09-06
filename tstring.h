@@ -51,10 +51,6 @@ typedef char				tchar;			///< コンパイルオプションによって以下に変換される _TCHA
 #define _W2A(dst, src)	ToMultString(dst, src)	///< wstring→string変換処理
 
 
-/* 書式付フォーマット */
-size_t StringFormatW(std::wstring &out, const wchar_t * format, ...);
-size_t StringFormatA(std::string &out, const char * format, ...);
-
 /* wstring ⇔ stringの相互変換 */
 void ToWideString(std::wstring &dst, const std::string &src);
 void ToWideString(std::wstring &dst, const std::string &src, const std::locale& loc);
